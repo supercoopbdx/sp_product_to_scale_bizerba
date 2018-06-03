@@ -45,11 +45,13 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 	                    <group colspan="4">
 	 	        			<button name="send_all_to_scale_create" type="object" string="Resend Creation All To the Scale System"/>
 	 	        			<button name="send_all_to_scale_write" type="object" string="Resend Update All To the Scale System"/>
+	 	        			<button name="reorder_products_by_name" type="object" string="Reorder products by name"/>
 	 	        		</group>
                         <page string="Products">
 							<group colspan="4">
 								<button name="send_all_to_scale_create" type="object" string="Resend Creation All To the Scale System"/>
 								<button name="send_all_to_scale_write" type="object" string="Resend Update All To the Scale System"/>
+                                <button name="reorder_products_by_name" type="object" string="Reorder products by name"/>
 							</group>
                             <group>
                                 <separator string="Products" colspan="4"/>
