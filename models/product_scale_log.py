@@ -265,7 +265,6 @@ class product_scale_log(Model):
         # Generate temporary image file
         f_name = self._generate_image_file_name(
             cr, uid, obj, field, extension, context=context)
-        _logger.info('Send %s image', f_name)
         if not f_name:
             # No image define
             return False
@@ -322,7 +321,6 @@ class product_scale_log(Model):
                 # Push First Image for constrains reason
                 # Image extension will get on the line field suffix
                 # for default will be `png` if suffix empty.
-                _logger.info('Prepare %s image', log.product_id)
                 for product_line in scale_system.product_line_ids:
                     if product_line.type == 'product_image' and \
                             scale_system.send_images:
