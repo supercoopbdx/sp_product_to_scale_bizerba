@@ -342,6 +342,24 @@ class product_scale_log(Model):
                 folder_path, scale_system.product_text_file_pattern,
                 product_text_lst, scale_system.encoding, context=context)
 
+            #TODO Generate Key file
+            logging.info('--------------------------------')
+            cr.execute('select scale_sequence from product_product where scale_sequence between 281 and 980')
+            scs = [x[0] for x in cr.fetchall()]
+
+            key_text_lst = []
+            for i in range(281, 980):
+                ii = str(i)
+                line = ii + '#0002#' + ii
+                for s in scs:
+                    if s == i:
+                        line = ii + '#0001#' + ii
+                key_text_lst.append(line)
+
+            # logging.info("\n".join(key_text_lst))
+
+            #todo self.ftp_connection_push_text_file
+
             # Close FTP Connection
             self.ftp_connection_close(cr, uid, ftp, context=context)
 
