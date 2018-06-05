@@ -343,8 +343,10 @@ class product_scale_log(Model):
                 product_text_lst, scale_system.encoding, context=context)
 
             # Supercoop hack : Generate Key file
+            # Ne fonctionne que pour le groupe "Tous les articles"
             logging.info('Generate Key file')
-            cr.execute('select scale_sequence from product_product where scale_sequence between 281 and 980')
+            cr.execute('select scale_sequence from product_product'\
+                       + ' where scale_group_id = 1 and scale_sequence between 281 and 980')
             scs = [x[0] for x in cr.fetchall()]
 
             key_text_lst = []
@@ -377,6 +379,11 @@ class product_scale_log(Model):
         return True
 
     def cron_send_to_scale(self, cr, uid, context=None):
+        # Supercoop hack : Reorder products by name
+        # Ne fonctionne que pour le groupe "Tous les articles"
+        psg = self.pool['product.scale.group']
+        psg.reorder_products_by_name(cr, uid, {1}, context=None)
+
         log_ids = self.search(
             cr, uid, [('sent', '=', False)], order='log_date', context=context)
         self.send_log(cr, uid, log_ids, context=context)

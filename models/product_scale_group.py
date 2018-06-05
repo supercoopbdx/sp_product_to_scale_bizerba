@@ -58,13 +58,14 @@ class product_scale_group(Model):
 
     # Tri les articles par nom pour la balance tactile
     # Tri selon les catégories de 281 à 980
+    # et aussi pour le labo (de 1 à 280)
     # Voir le tuto sur le portail
     def reorder_products_by_name(self, cr, uid, ids, context=None):
         myself = self.browse(cr, uid, ids, context=context)
         keys = [1, 281, 421, 561, 771, 876]
         cats = {0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}}
         for group in myself:
-            logging.info('group "%s"', group.name)
+            logging.info('Reorder group "%s"', group.name)
             for pp in group.product_ids:
                 if 1 <= pp.scale_sequence <= 280:
                     cats[0][pp.name] = pp
