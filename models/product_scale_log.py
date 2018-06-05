@@ -349,11 +349,11 @@ class product_scale_log(Model):
 
             key_text_lst = []
             for i in range(281, 981):
-                r = 2
+                r = 9999
                 if i in scs:
-                    r = 1
-                line = str(i) + self._EXTERNAL_TEXT_DELIMITER + "000" + str(r) + self._EXTERNAL_TEXT_DELIMITER \
-                    + str(i) + self._ENCODING_MAPPING[scale_system.encoding]
+                    r = i
+                line = str(i) + self._EXTERNAL_TEXT_DELIMITER + "0001" + self._EXTERNAL_TEXT_DELIMITER \
+                    + str(r) + self._ENCODING_MAPPING[scale_system.encoding]
                 key_text_lst.append(line.decode('unicode-escape'))
             # logging.info("%s %s %s %s %s", scale_system.csv_relative_path,
             #              folder_path, scale_system.product_text_file_pattern.replace("ARTI", "KEYS"),
