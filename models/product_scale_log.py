@@ -342,23 +342,27 @@ class product_scale_log(Model):
                 folder_path, scale_system.product_text_file_pattern,
                 product_text_lst, scale_system.encoding, context=context)
 
-            #TODO Generate Key file
-            logging.info('--------------------------------')
+            # Supercoop hack : Generate Key file
+            logging.info('Generate Key file')
             cr.execute('select scale_sequence from product_product where scale_sequence between 281 and 980')
             scs = [x[0] for x in cr.fetchall()]
 
             key_text_lst = []
-            for i in range(281, 980):
-                ii = str(i)
-                line = ii + '#0002#' + ii
-                for s in scs:
-                    if s == i:
-                        line = ii + '#0001#' + ii
-                key_text_lst.append(line)
+            for i in range(281, 981):
+                r = 2
+                if i in scs:
+                    r = 1
+                line = str(i) + self._EXTERNAL_TEXT_DELIMITER + "000" + str(r) + self._EXTERNAL_TEXT_DELIMITER \
+                    + str(i) + self._ENCODING_MAPPING[scale_system.encoding]
+                key_text_lst.append(line.decode('unicode-escape'))
+            # logging.info("%s %s %s %s %s", scale_system.csv_relative_path,
+            #              folder_path, scale_system.product_text_file_pattern.replace("ARTI", "KEYS"),
+            #              key_text_lst, scale_system.encoding)
 
-            # logging.info("\n".join(key_text_lst))
-
-            #todo self.ftp_connection_push_text_file
+            self.ftp_connection_push_text_file(
+                cr, uid, ftp, scale_system.csv_relative_path,
+                folder_path, scale_system.product_text_file_pattern.replace("ARTI", "KEYS"),
+                key_text_lst, scale_system.encoding, context=context)
 
             # Close FTP Connection
             self.ftp_connection_close(cr, uid, ftp, context=context)
