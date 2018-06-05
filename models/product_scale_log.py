@@ -347,6 +347,8 @@ class product_scale_log(Model):
             cr.execute('select scale_sequence from product_product where scale_sequence between 281 and 980')
             scs = [x[0] for x in cr.fetchall()]
 
+            # Si la touche n'a pas d'assignation, on lui assigne l'article 9999
+            # Bien sûr l'article 9999 ne doit pas exister sur la balance
             key_text_lst = []
             for i in range(281, 981):
                 r = 9999
