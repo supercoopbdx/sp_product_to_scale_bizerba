@@ -381,13 +381,17 @@ class product_scale_log(Model):
         return True
 
     def cron_send_to_scale(self, cr, uid, context=None):
-        # Supercoop hack : Reorder products by name
-        # Ne fonctionne que pour le groupe "Tous les articles"
-        psg = self.pool['product.scale.group']
-        psg.reorder_products_by_name(cr, uid, {1}, context=None)
-
         log_ids = self.search(
             cr, uid, [('sent', '=', False)], order='log_date', context=context)
+
+        # Supercoop hack : Reorder products by name
+        # Ne fonctionne que pour le groupe "Tous les articles"
+        # Réattribue les n° de séquence que si besoin
+        if len(log_ids) > 0:
+            psg = self.pool['product.scale.group']
+            psg.reorder_products_by_name(cr, uid, {1}, context=None)
+            log_ids = self.search(
+                cr, uid, [('sent', '=', False)], order='log_date', context=context)
         self.send_log(cr, uid, log_ids, context=context)
 
     def _generate_image_file_name(self, cr, uid, obj, field, extension,
