@@ -104,8 +104,8 @@ class product_product(Model):
                 # Supercoop hack
                 # logging.info('- %s - %s -', vals.get('sale_ok', product.sale_ok),
                 #              vals.get('scale_sequence', product.scale_sequence))
-                if vals.get('sale_ok', False) is False and product.scale_sequence != 0:
-                    vals['scale_sequence'] = 0
+                # if vals.get('sale_ok', False) is False and product.scale_sequence != 0:
+                #     vals['scale_sequence'] = 0
         ctx['bizerba_off'] = True
         res = super(product_product, self).write(
             cr, uid, ids, vals, context=ctx)
