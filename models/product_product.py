@@ -3,12 +3,14 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 from datetime import datetime
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
 import openerp.addons.decimal_precision as dp
 
+_logger = logging.getLogger(__name__)
 
 class product_product(Model):
     _inherit = 'product.product'
@@ -99,7 +101,11 @@ class product_product(Model):
                                 cr, uid, vals, product, context=context):
                             # Data related to the scale
                             defered[product.id] = 'write'
-
+                # Supercoop hack
+                # logging.info('- %s - %s -', vals.get('sale_ok', product.sale_ok),
+                #              vals.get('scale_sequence', product.scale_sequence))
+                if vals.get('sale_ok', False) is False and product.scale_sequence != 0:
+                    vals['scale_sequence'] = 0
         ctx['bizerba_off'] = True
         res = super(product_product, self).write(
             cr, uid, ids, vals, context=ctx)
