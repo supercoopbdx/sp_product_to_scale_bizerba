@@ -60,7 +60,6 @@ class product_scale_group(Model):
     # Tri selon les catégories de 281 à 980
     # et aussi pour le labo (de 1 à 280)
     # Voir le tuto sur le portail
-    # TODO ne pas réattribuer si déjà dans l'ordre (génère sans arrêt le même fichier)
     def reorder_products_by_name(self, cr, uid, ids, context=None):
         myself = self.browse(cr, uid, ids, context=context)
         keys = [1, 281, 421, 561, 771, 876]
@@ -86,6 +85,8 @@ class product_scale_group(Model):
                 logging.info('Sort cat %s', i)
                 # sorted(cat.keys(), key=unicode.lower)
                 for n in sorted(cat):
-                    logging.info('--- %s : %s => %s', n, cat[n].scale_sequence, keys[i])
-                    cat[n].write({'scale_sequence': keys[i]})
+                    # Ne pas réattribuer si déjà dans l'ordre
+                    if cat[n].scale_sequence != keys[i]:
+                        logging.info('--- %s : %s => %s', n, cat[n].scale_sequence, keys[i])
+                        cat[n].write({'scale_sequence': keys[i]})
                     keys[i] += 1
