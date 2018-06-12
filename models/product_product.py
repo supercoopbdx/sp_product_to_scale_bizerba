@@ -102,10 +102,11 @@ class product_product(Model):
                             # Data related to the scale
                             defered[product.id] = 'write'
                 # Supercoop hack
-                # logging.info('- %s - %s -', vals.get('sale_ok', product.sale_ok),
-                #              vals.get('scale_sequence', product.scale_sequence))
-                # if vals.get('sale_ok', False) is False and product.scale_sequence != 0:
-                #     vals['scale_sequence'] = 0
+                # Retire le n° de sequence si non vendu
+                # logging.info('%s - %s - %s - %s', product.sale_ok, vals.get('sale_ok'),
+                #              product.scale_sequence, vals.get('scale_sequence'))
+                if vals.get('sale_ok', product.sale_ok) is False:
+                    vals['scale_sequence'] = 0
         ctx['bizerba_off'] = True
         res = super(product_product, self).write(
             cr, uid, ids, vals, context=ctx)
