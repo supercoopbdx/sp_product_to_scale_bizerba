@@ -346,7 +346,7 @@ class product_scale_log(Model):
             # Ne fonctionne que pour le groupe "Tous les articles"
             logging.info('Generate Key file')
             cr.execute('select scale_sequence from product_product'\
-                       + ' where scale_group_id = 1 and scale_sequence between 281 and 980')
+                       + ' where scale_sequence between 281 and 980')
             scs = [x[0] for x in cr.fetchall()]
 
             # Si la touche n'a pas d'assignation, on lui assigne l'article 9999
@@ -389,7 +389,10 @@ class product_scale_log(Model):
         # Réattribue les n° de séquence que si besoin
         if len(log_ids) > 0:
             psg = self.pool['product.scale.group']
-            psg.reorder_products_by_name(cr, uid, {1}, context=None)
+            cr.execute('select id from product_scale_group where active = true')
+            scs = [x[0] for x in cr.fetchall()]
+            psg.reorder_products_by_name(cr, uid, scs, context=None)
+
             log_ids = self.search(
                 cr, uid, [('sent', '=', False)], order='log_date', context=context)
         self.send_log(cr, uid, log_ids, context=context)
