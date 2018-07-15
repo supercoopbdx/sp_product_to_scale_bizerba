@@ -71,8 +71,8 @@ class product_scale_group(Model):
             for pp in group.product_ids:
                 if pp.sale_ok is True:
                     sp[pp.name] = pp
-                elif pp.scale_sequence != 0:
-                    sp[pp].write({'scale_sequence': 0})
+                # elif pp.scale_sequence != 0:
+                #     sp[pp].write({'scale_sequence': 0})
 
             # Sort product
             for pp in sorted(sp):
