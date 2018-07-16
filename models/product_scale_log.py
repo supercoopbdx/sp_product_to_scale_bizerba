@@ -387,11 +387,9 @@ class product_scale_log(Model):
             cr, uid, [('sent', '=', False)], order='log_date', context=context)
 
         # Supercoop hack : Reorder products by name
-        # Ne fonctionne que pour le groupe "Tous les articles"
-        # Réattribue les n° de séquence que si besoin
         if len(log_ids) > 0:
             psg = self.pool['product.scale.group']
-            cr.execute('select id from product_scale_group where active = true')
+            cr.execute('select id from product_scale_group where active = true and id != 7')
             scs = [x[0] for x in cr.fetchall()]
             psg.reorder_products_by_name(cr, uid, scs, context=None)
 
