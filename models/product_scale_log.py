@@ -343,10 +343,12 @@ class product_scale_log(Model):
                 product_text_lst, scale_system.encoding, context=context)
 
             # Supercoop hack : Generate Key file
-            # Ne fonctionne que pour le groupe "Tous les articles"
+            # Ne prend pas le groupe 7. Aucun
             logging.info('Generate Key file')
-            cr.execute('select scale_sequence from product_product'\
-                       + ' where scale_sequence between 281 and 980')
+            query = ('select scale_sequence from product_product pp '
+                     'join product_template template2 on pp.product_tmpl_id = template2.id '
+                     'where template2.sale_ok = true and scale_group_id != 7 and scale_sequence between 281 and 980')
+            cr.execute(query)
             scs = [x[0] for x in cr.fetchall()]
 
             # Si la touche n'a pas d'assignation, on lui assigne l'article 9999

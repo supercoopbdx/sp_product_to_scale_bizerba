@@ -50,13 +50,16 @@ class product_product(Model):
 
     # Custom Section
     def _send_to_scale_bizerba(self, cr, uid, action, product, context=None):
-        log_obj = self.pool['product.scale.log']
-        log_obj.create(cr, uid, {
-            'log_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'scale_system_id': product.scale_group_id.scale_system_id.id,
-            'product_id': product.id,
-            'action': action,
-            }, context=context)
+        # Supercoop hack
+        # Pas d'action pour le groupe 7. Aucun
+        if product.scale_group_id.id != 7:
+            log_obj = self.pool['product.scale.log']
+            log_obj.create(cr, uid, {
+                'log_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'scale_system_id': product.scale_group_id.scale_system_id.id,
+                'product_id': product.id,
+                'action': action,
+                }, context=context)
 
     def _check_vals_scale_bizerba(self, cr, uid, vals, product, context=None):
         system = product.scale_group_id.scale_system_id
@@ -82,13 +85,10 @@ class product_product(Model):
         if not context.get('bizerba_off', False):
             for product in self.browse(cr, uid, ids, context=context):
                 # Supercoop hack
-                # Retire le n° de sequence si non vendu
-                # logging.info('%s - %s - %s - %s', product.sale_ok, vals.get('sale_ok'),
-                #              product.scale_sequence, vals.get('scale_sequence'))
+                # Retire le n° de sequence si non vendu ou groupe 7. Aucun
                 sale_ok = vals.get('sale_ok', product.sale_ok)
-                if sale_ok is False:
+                if sale_ok is False or vals.get('scale_group_id') == 7:
                     vals['scale_sequence'] = 0
-                # elif sale_ok is True:
 
                 ignore = not product.scale_group_id\
                     and 'scale_group_id' not in vals.keys()

@@ -65,19 +65,19 @@ class product_scale_group(Model):
         myself = self.browse(cr, uid, ids, context=context)
         seqs = {1: 1, 2: 281, 3: 421, 4: 561, 5: 771, 6: 876}
         for group in myself:
-            sp = {}
-            seq_min = seqs[group.id]
-            logging.info('Reorder group "%s" - Min: %s', group.name, seq_min)
-            for pp in group.product_ids:
-                if pp.sale_ok is True:
-                    sp[pp.name] = pp
-                # elif pp.scale_sequence != 0:
-                #     sp[pp].write({'scale_sequence': 0})
+            if group.id != 7:
+                sp = {}
+                seq = seqs[group.id]
+                logging.info('Reorder group "%s" from sequence %s', group.name, seq)
+                for pp in group.product_ids:
+                    if pp.sale_ok is True:
+                        sp[pp.name] = pp
 
-            # Sort product
-            for pp in sorted(sp):
-                logging.info('--- %s : %s => %s', sp[pp].name, sp[pp].scale_sequence, seq_min)
-                sp[pp].write({'scale_sequence': seq_min})
-                seq_min += 1
-                if seq_min == seqs[group.id+1]:
-                    break
+                # Sort product
+                for pp in sorted(sp):
+                    if sp[pp].scale_sequence != seq:
+                        logging.info('--- %s : %s => %s', sp[pp].name, sp[pp].scale_sequence, seq)
+                        sp[pp].write({'scale_sequence': seq})
+                    seq += 1
+                    if seq == seqs[group.id+1]:
+                        break
