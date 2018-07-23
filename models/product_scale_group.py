@@ -63,7 +63,7 @@ class product_scale_group(Model):
     # Voir le tuto sur le portail
     def reorder_products_by_name(self, cr, uid, ids, context=None):
         myself = self.browse(cr, uid, ids, context=context)
-        seqs = {1: 1, 2: 281, 3: 421, 4: 561, 5: 771, 6: 876}
+        seqs = {1: 1, 2: 281, 3: 421, 4: 561, 5: 771, 6: 876, 7: 981}
         for group in myself:
             if group.id != 7:
                 sp = {}
@@ -79,5 +79,5 @@ class product_scale_group(Model):
                         logging.info('--- %s : %s => %s', sp[pp].name, sp[pp].scale_sequence, seq)
                         sp[pp].write({'scale_sequence': seq})
                     seq += 1
-                    # if seq == seqs[group.id+1]:
-                    #     break
+                    if seq == seqs[group.id+1]:
+                        break
