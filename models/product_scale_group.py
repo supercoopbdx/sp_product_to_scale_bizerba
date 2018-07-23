@@ -79,5 +79,5 @@ class product_scale_group(Model):
                         logging.info('--- %s : %s => %s', sp[pp].name, sp[pp].scale_sequence, seq)
                         sp[pp].write({'scale_sequence': seq})
                     seq += 1
-                    if seq == seqs[group.id+1]:
-                        break
+                    # if seq == seqs[group.id+1]:
+                    #     break
