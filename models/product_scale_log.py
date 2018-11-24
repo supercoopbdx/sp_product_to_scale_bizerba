@@ -113,7 +113,17 @@ class product_scale_log(Model):
                     product_text += str(value).replace('.0', '')
 
                 elif product_line.type == 'text':
+                    # Supercoop Hack: concatene le code barre base + le nom de produit
+                    # Dans l'execution du script,
+                    if product_line.code == 'ABEZ':
+                        product_text += '%BARCODEBASE%'
+
+                    if product_line.code == 'EAN1':
+                        barcode_base = self._clean_value(value, product_line)[4:7]
+                        product_text = product_text.replace('%BARCODEBASE%', barcode_base + ' - ')
+
                     product_text += self._clean_value(value, product_line)
+                    _logger.info('*************%s::%s', product_line.name, product_text)
 
                 elif product_line.type == 'external_text':
                     external_id = str(log.product_id.id)\
