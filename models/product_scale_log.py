@@ -123,7 +123,7 @@ class product_scale_log(Model):
                         product_text = product_text.replace('%BARCODEBASE%', barcode_base + ' - ')
 
                     product_text += self._clean_value(value, product_line)
-                    _logger.info('*************%s::%s', product_line.name, product_text)
+                    # _logger.info('*************%s::%s', product_line.name, product_text)
 
                 elif product_line.type == 'external_text':
                     external_id = str(log.product_id.id)\
