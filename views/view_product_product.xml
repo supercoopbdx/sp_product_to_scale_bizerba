@@ -19,7 +19,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             <field name="scale_sequence"/>
                             <field name="scale_tare_weight"/>
                         </group>
-                        <group groups="base.group_no_one">
+                        <group>
                             <button name="send_scale_create" type="object" string="Resend Creation To the Scale System"
                                 colspan="2"/>
                             <button name="send_scale_write" type="object" string="Resend Update To the Scale System"
