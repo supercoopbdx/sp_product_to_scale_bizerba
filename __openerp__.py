@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Products - Send to Scales',
+    'name': 'Supercoop - Products - Send to Scales',
     'summary': 'Synchronize Odoo database with Scales',
     'version': '1.0',
     'category': 'Tools',
@@ -18,7 +18,7 @@ Roadmap / Know Issues
 
 * It should be great to split this module into many modules, with some generic
   features in a module named product_to_scale and some specifics features
-  for each scales system. 'product_to_scale_bizerba',
+  for each scales system. 'sp_product_to_scale_bizerba',
   'product_to_scale_metler_toledo', etc.
 
 """,

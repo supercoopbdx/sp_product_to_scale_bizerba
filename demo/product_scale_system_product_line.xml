@@ -13,8 +13,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="name">Bizerba Shelf ID</field>
         <field name="sequence">2</field>
         <field name="type">many2one</field>
-        <field name="field_id" ref="product_to_scale_bizerba.field_product_product_scale_group_id"/>
-        <field name="related_field_id" ref="product_to_scale_bizerba.field_product_scale_group_external_identity"/>
+        <field name="field_id" ref="sp_product_to_scale_bizerba.field_product_product_scale_group_id"/>
+        <field name="related_field_id" ref="sp_product_to_scale_bizerba.field_product_scale_group_external_identity"/>
         <field name="delimiter">#</field>
     </record>
 
@@ -102,7 +102,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="sequence">10</field>
         <field name="type">many2one</field>
         <field name="field_id" ref="product.field_product_template_uom_id"/>
-        <field name="related_field_id" ref="product_to_scale_bizerba.field_product_uom_scale_type"/>
+        <field name="related_field_id" ref="sp_product_to_scale_bizerba.field_product_uom_scale_type"/>
         <field name="delimiter">#</field>
     </record>
 
@@ -112,7 +112,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="name">Tare Weight</field>
         <field name="sequence">11</field>
         <field name="type">numeric</field>
-        <field name="field_id" ref="product_to_scale_bizerba.field_product_product_scale_tare_weight"/>
+        <field name="field_id" ref="sp_product_to_scale_bizerba.field_product_product_scale_tare_weight"/>
         <field name="numeric_coefficient">1000</field>
         <field name="numeric_round">1</field>
         <field name="delimiter">#</field>
