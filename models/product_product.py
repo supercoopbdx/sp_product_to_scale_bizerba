@@ -85,9 +85,9 @@ class product_product(Model):
         if not context.get('bizerba_off', False):
             for product in self.browse(cr, uid, ids, context=context):
                 # Supercoop hack
-                # Retire le n° de sequence si non vendu ou groupe '7. Aucun' ou None
+                # Retire le n° de sequence si non vendu ou groupe '7. Aucun'
                 sale_ok = vals.get('sale_ok', product.sale_ok)
-                if sale_ok is False or vals.get('scale_group_id', False) in [None, False, 7]:
+                if sale_ok is False or vals.get('scale_group_id') == 7:
                     vals['scale_sequence'] = 0
 
                 ignore = not product.scale_group_id\
